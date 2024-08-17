@@ -32,7 +32,7 @@ int main(void)
         {
             square_solver_roots(a, b, c, &x1, &x2);
             if (x1 == x2)
-                printf("Корень квадрат уравнения %.1lfx^2 + %.1lfx + %.1lf = 0   x = %.2lf\n", a, b, c, x2);
+                printf("Корень квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0   x = %.2lf\n", a, b, c, x2);
             else
                 printf("Корни квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = %.2lf и x2 = %.2lf\n", a, b, c, x1, x2);
         }
