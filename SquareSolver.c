@@ -20,7 +20,7 @@ int main(void)
             root = square_solver_one_root(b, c);
             printf("Корень линейного уравнения %.1lfx + %.1lf=0   x = %.2lf\n", b, c, root);
         }
-        else if (a == 0 && b == 0 && c == 0)  
+        else if (a == 0 && b == 0 && c == 0)
         {
             printf("Уравнение имеет бесконечно много решений (все коэффициенты равны нулю).\n");
         }
