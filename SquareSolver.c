@@ -50,7 +50,7 @@ int main(void)
 
     return 0;
 }
-void square_solver_roots(double a, double b, double c, double *x1, double *x2)
+void square_solver_roots (double a, double b, double c, double *x1, double *x2)
 {
     double eps = 1e-12;
     double discriminant = (b * b) - (4 * a * c);
