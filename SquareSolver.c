@@ -45,17 +45,17 @@ void comparison_coefficients_with_zero_and_output (double a , double b , double 
 {
     double eps = 1e-12;  // коэффиценты квадратного кравнения , a-старший коэффицент , b-средний , c-свободный.
     double x1, x2, root;
-    if (fabs(a) < eps && fabs(b) > eps) {
+    if (fabs(a) <= eps && fabs(b) >= eps) {
             if (fabs(c) < eps)
                 root = 0;
             else
                 root = solution_linear_equation (b, c);
                 printf ("Корень линейного уравнения %.1lfx + %.1lf=0   x = %.2lf\n", b, c, root);
     }
-    else if (fabs(a) < eps && fabs(b) < eps && fabs(c) < eps) {
+    else if (fabs(a) <= eps && fabs(b) <= eps && fabs(c) <= eps) {
         printf ("Уравнение имеет бесконечно много решений (все коэффициенты равны нулю).\n");
     }
-    else if (fabs(a) < eps && fabs(b) < eps && fabs(c) > eps) {
+    else if (fabs(a) <= eps && fabs(b) <= eps && fabs(c) >= eps) {
         printf ("Уравнение не имеет решений (c != 0, а старшие коэффициенты равны нулю).\n");
     }
     else {
