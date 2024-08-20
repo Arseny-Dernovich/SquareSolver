@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
-double liner_equation_solution (double b, double c);                              // Функция для нахождения корня линейного уравнения (когда a=0)
-void square_equation_solution (double a, double b, double c, double *x1, double *x2);// Функция для нахождения корней квадаратного уравнения
-void output (double a , double b , double c);
-void square_solution (void);
+double solution_linear_equation (double b, double c);
+void solution_square_equation (double a, double b, double c, double *x1, double *x2);
+void comparison_coefficients_with_zero_and_output (double a , double b , double c);
+void solve_equation (void);
 _Bool continue_entering (void);
 
 
 int main (void)
 {
-    square_solution ();
+    solve_equation ();
     printf ("Программа завершенна");
 
     return 0;
@@ -19,7 +19,7 @@ int main (void)
 
 
 
-void square_equation_solution (double a, double b, double c, double *x1, double *x2)
+void solution_square_equation (double a, double b, double c, double *x1, double *x2)
 {
     double eps = 1e-12;
     double discriminant = (b * b) - (4 * a * c);
@@ -35,13 +35,13 @@ void square_equation_solution (double a, double b, double c, double *x1, double 
 }
 
 
-double liner_equation_solution (double b, double c)
+double solution_linear_equation (double b, double c)
 {
     return (-c) / b;
 }
 
 
-void output (double a , double b , double c)
+void comparison_coefficients_with_zero_and_output (double a , double b , double c)
 {
     double eps = 1e-12;  // коэффиценты квадратного кравнения , a-старший коэффицент , b-средний , c-свободный.
     double x1, x2, root;
@@ -49,22 +49,22 @@ void output (double a , double b , double c)
             if (fabs(c) < eps)
                 root = 0;
             else
-                root = liner_equation_solution (b, c);
+                root = solution_linear_equation (b, c);
                 printf ("Корень линейного уравнения %.1lfx + %.1lf=0   x = %.2lf\n", b, c, root);
-        }
-        else if (fabs(a) < eps && fabs(b) < eps && fabs(c) < eps) {
-            printf ("Уравнение имеет бесконечно много решений (все коэффициенты равны нулю).\n");
-        }
-        else if (fabs(a) < eps && fabs(b) < eps && fabs(c) > eps) {
-            printf ("Уравнение не имеет решений (c != 0, а старшие коэффициенты равны нулю).\n");
-        }
-        else {
-             square_equation_solution (a, b, c, &x1, &x2);
-            if (fabs(x1 - x2) < eps)
-                printf ("Корень квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0   x = %.2lf\n", a, b, c, x2);
-            else
-                printf ("Корни квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = %.2lf и x2 = %.2lf\n", a, b, c, x1, x2);
-        }
+    }
+    else if (fabs(a) < eps && fabs(b) < eps && fabs(c) < eps) {
+        printf ("Уравнение имеет бесконечно много решений (все коэффициенты равны нулю).\n");
+    }
+    else if (fabs(a) < eps && fabs(b) < eps && fabs(c) > eps) {
+        printf ("Уравнение не имеет решений (c != 0, а старшие коэффициенты равны нулю).\n");
+    }
+    else {
+            solution_square_equation (a, b, c, &x1, &x2);
+        if (fabs(x1 - x2) < eps)
+            printf ("Корень квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0   x = %.2lf\n", a, b, c, x2);
+        else
+            printf ("Корни квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = %.2lf и x2 = %.2lf\n", a, b, c, x1, x2);
+    }
 }
 
 _Bool continue_entering (void)
@@ -78,18 +78,17 @@ _Bool continue_entering (void)
                 continue;
 
         if (choose == 'y' || choose == 'Y') {
-            break;
+            return true;
         }
         else if ( choose == 'n' || choose == 'N'){
             return false;
-            break;
         }
 
     }
 }
 
 
-void square_solution (void)
+void solve_equation (void)
 {
     double a, b, c;
     bool flag = true;
@@ -103,7 +102,7 @@ void square_solution (void)
                 continue;
             }
 
-            output (a , b , c);
+            comparison_coefficients_with_zero_and_output (a , b , c);
 
             flag = continue_entering ();
 
