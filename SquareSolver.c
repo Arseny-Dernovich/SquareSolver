@@ -60,7 +60,7 @@ void comparison_coefficients_with_zero_and_output (double a , double b , double 
     }
     else {
             solution_square_equation (a, b, c, &x1, &x2);
-        if (fabs(x1 - x2) < eps)
+        if (fabs(x1 - x2) <= eps)
             printf ("Корень квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0   x = %.2lf\n", a, b, c, x2);
         else
             printf ("Корни квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = %.2lf и x2 = %.2lf\n", a, b, c, x1, x2);
