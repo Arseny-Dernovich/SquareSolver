@@ -21,7 +21,7 @@
 
 /// Хочу сделать очистку буфера
 int odds_processing(double a, double b, double c);
-int solve_square_equation (double a, double b, double c);
+int check_discriminant (double a, double b, double c);
 void output (double* root , double* x1 , double* x2 ,double a, double b, double c );
 _Bool continue_entering (void);
 void input_coeff(double* a , double* b , double* c);
@@ -77,7 +77,7 @@ int is_zero (double a , double b , double c)
     return 0;
 }
 
-int solve_square_equation (double a, double b, double c)
+int check_discriminant (double a, double b, double c)
 {
     double eps = 1e-12;
     double discriminant = (b * b) - (4 * a * c);
@@ -99,9 +99,9 @@ int odds_processing (double a, double b, double c)
         return infinit_roots;
     else if (is_zero (a , b , c)== bool_no)
         return no_roots;
-    else if (solve_square_equation (a , b , c) == bool_pos_discr)
+    else if (check_discriminant (a , b , c) == bool_pos_discr)
         return  bool_pos_discr;
-    else if (solve_square_equation (a , b , c) == bool_pos_discr)
+    else if (check_discriminant (a , b , c) == bool_pos_discr)
         return bool_pos_discr;
 
 }
@@ -140,10 +140,6 @@ void output (double* root , double* x1 , double* x2 , double a , double b , doub
         break;
     }
 
-
-
-
-
 }
 
 
@@ -166,8 +162,6 @@ _Bool continue_entering (void)
 
     }
 }
-
-
 
 
 
