@@ -33,7 +33,6 @@ enum checking_discr {
 
 
 
-/// Хочу сделать очистку буфера
 int odds_processing(double a, double b, double c);
 int check_discriminant (double a, double b, double c);
 int calculate_roots (double a, double b, double c , double* root , double* x1 , double* x2 );
