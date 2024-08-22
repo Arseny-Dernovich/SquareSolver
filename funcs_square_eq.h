@@ -12,8 +12,9 @@ void Neg_discr (int num_test , double a , double b , double c , double x1_refer 
 _Bool compare_roots (double x , double x_verief);
 _Bool is_zero (double coeff);
 void output_Error (int num_test , double a , double b , double c);
-void output_line_zeroDis (double a , double b , double c , double x1_refer , double x1);
-void output_posDis (double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2);
+void output_line_zeroDis (double x1_refer , double x1);
+void output_posDis (double x1_refer , double x2_refer , double x1 , double x2);
+void output_posDis_zeroDis_line (int num_test , double a , double b , double c);
 
 
 
@@ -123,30 +124,37 @@ void output_Error (int num_test , double a , double b , double c)
 }
 
 
-void output_line_zeroDis (double a , double b , double c , double x1_refer , double x1)
+void output_line_zeroDis (double x1_refer , double x1)
 {
     printf ("Эталонный корень : x_refer = %.2lf" , x1_refer);
     printf ("        Вычисленный корень : x = %.2lf\n" , x1);
 }
 
-void output_posDis (double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
+void output_posDis (double x1_refer , double x2_refer , double x1 , double x2)
 {
     printf ("Эталонные корни : x1_refer = %.2lf и x2_refer = %.2lf" , x1_refer , x2_refer);
     printf ("        Вычисленные корни : x1 = %.2lf и x2 = %.2lf\n" , x1 , x2);
 }
 
 
+void output_posDis_zeroDis_line (int num_test , double a , double b , double c)
+{
+    printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают\n", num_test , a , b , c);
+}
+
+
+
 void Zero_discr (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
 {
 
     if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer)) {
-        printf ("\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают\n", a , b , c);
-        output_line_zeroDis ( a , b , c , x1_refer , x1);
+        output_posDis_zeroDis_line (num_test , a , b , c);
+        output_line_zeroDis (x1_refer , x1);
     }
 
     else {
         output_Error (num_test , a , b , c);
-        output_line_zeroDis ( a , b , c , x1_refer , x1);
+        output_line_zeroDis (x1_refer , x1);
     }
 
     return;
@@ -155,13 +163,13 @@ void Zero_discr (int num_test , double a , double b , double c , double x1_refer
 void Pos_discr (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
 {
     if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer)) {
-        printf ("\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают\n", a , b , c);
-        output_posDis (a , b , c , x1_refer , x2_refer , x1 , x2);
+        output_posDis_zeroDis_line (num_test , a , b , c);
+        output_posDis (x1_refer , x2_refer , x1 , x2);
     }
 
     else {
         output_Error (num_test , a , b , c);
-        output_posDis (a , b , c , x1_refer , x2_refer , x1 , x2);
+        output_posDis (x1_refer , x2_refer , x1 , x2);
     }
 
     return;
@@ -171,7 +179,7 @@ void Pos_discr (int num_test , double a , double b , double c , double x1_refer 
 void Neg_discr (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
 {
     if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer))
-        printf ("\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают и являются мнимыми\n", a , b , c);
+        printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают и являются мнимыми\n", num_test , a , b , c);
 
     else
         output_Error (num_test , a , b , c);
@@ -184,13 +192,13 @@ void Line_roots (int num_test , double a , double b , double c , double x1_refer
 {
 
     if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer)) {
-        printf ("\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают\n", a , b , c);
-        output_line_zeroDis ( a , b , c , x1_refer , x1);
+        output_posDis_zeroDis_line (num_test , a , b , c);
+        output_line_zeroDis (x1_refer , x1);
     }
 
     else {
         output_Error (num_test , a , b , c);
-        output_line_zeroDis ( a , b , c , x1_refer , x1);
+        output_line_zeroDis (x1_refer , x1);
     }
 
     return;
@@ -201,7 +209,7 @@ void Infinit_roots (int num_test , double a , double b , double c , double x1_re
 {
 
         if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer))
-            printf ("\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях бесконечное кол-во корней\n", a , b , c);
+            printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях бесконечное кол-во корней\n", num_test , a , b , c);
 
         else
             output_Error (num_test , a , b , c);
@@ -212,7 +220,7 @@ void Infinit_roots (int num_test , double a , double b , double c , double x1_re
 void No_roots (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
 {
         if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer))
-            printf ("\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях нет корней\n", a , b , c);
+            printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях нет корней\n", num_test , a , b , c);
 
         else
             output_Error (num_test , a , b , c);
