@@ -120,7 +120,7 @@ _Bool compare_roots (double x , double x_verief)
 
 void output_Error (int num_test , double a , double b , double c)
 {
-    printf ("\nError test %d , корни уравнения %.1lfx^2 + %.1lfx + %.1lf  не совпадают\n",num_test , a , b , c);
+    printf ("\nError test %d :\nкорни уравнения %.1lfx^2 + %.1lfx + %.1lf  не совпадают\n",num_test , a , b , c);
 }
 
 
