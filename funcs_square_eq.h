@@ -23,6 +23,7 @@ _Bool is_zero (double coeff)
 {
     if (fabs(coeff) <=  EPS)
         return true;
+
     else
         return false;
 }
@@ -77,19 +78,19 @@ int calculate_roots (double a, double b, double c , double* x1 , double* x2)
     switch (check) {
 
     case line_roots:
-        *x1 = (-c)/b;
+        *x1 = (-c) / b;
         break;
 
     case bool_pos_discr:
     {
-        double sqrt_discriminant = sqrt(discriminant);
+        double sqrt_discriminant = sqrt (discriminant);
         *x1 = (-b - sqrt_discriminant) / (2 * a);
         *x2 = (-b + sqrt_discriminant) / (2 * a);
         break;
     }
 
     case bool_zero_discr:
-        *x1 = (-b)/(2 * a);
+        *x1 = (-b) / (2 * a);
 
         break;
 
@@ -218,7 +219,6 @@ void No_roots (int num_test , double a , double b , double c , double x1_refer ,
 
     return;
 }
-
 
 
 void unit_test (test_values data)
