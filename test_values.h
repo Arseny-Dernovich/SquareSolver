@@ -25,7 +25,14 @@ enum checking_discr {
  bool_zero_discr
 };
 
+enum check_Error {
+ No_Error ,
+ Error
+};
+
+
 const double EPS = 1e-12;
+
 
 struct test_values {
     double a , b , c;
@@ -67,10 +74,11 @@ struct test_values test15 = {.a = 1.0 , .b = 1.0 , .c = 1.0 , .x1_refer = bool_n
 
 struct test_values test16 = {.a = 1.0 , .b = 2.0 , .c = 1.0, .x1_refer = -1 , .x2_refer = bool_zero_discr , .num_test = 16};
 
-struct test_values test17 = {.a = 2.0 , .b = 0.0 , .c = -1.0 , .x1_refer = (-sqrt(0.5)) , .x2_refer = sqrt(0.5) , .num_test = 17};
+struct test_values test17 = {.a = 2.0 , .b = 0.0 , .c = -1.0 , .x1_refer = 3 , .x2_refer = sqrt(0.5) , .num_test = 17};
 
 struct test_values test18 = {.a = 0.0 , .b = 1.0 , .c = 0.0 , .x1_refer = line_roots , .x2_refer = line_roots , .num_test = 18};
 
 struct test_values test19 = {.a = 2.0 , .b = -1.0 , .c = -1.0 , .x1_refer = -0.5 , .x2_refer = 1 , .num_test = 19};
 
 struct test_values test20 = {.a = 1.0 , .b = 2.0 , .c = -5.0 , .x1_refer = (((-2) - sqrt(24))/(2*1)) , .x2_refer = (((-2) + sqrt(24))/(2*1)) , .num_test = 20};
+
