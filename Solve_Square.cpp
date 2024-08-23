@@ -123,10 +123,10 @@ int calculate_roots (coeffs coef , double* x1 , double* x2)
         case no_roots:
         case bool_neg_discr:
 
-            /**x1 == NAN;
-            *x2 == NAN;
+            *x1 = NAN;
+            *x2 = NAN;
 
-            break;*/
+            break;
 
         default :
 
@@ -193,7 +193,7 @@ _Bool continue_entering (void)
 
 void SolveSquare (coeffs coef , roots* root)
 {
-
+    coef = {};
     bool flag = true;
     while (flag) {
         input_coeff (&coef.a , &coef.b , &coef.c);
