@@ -11,7 +11,7 @@
 
 int main (void)
 {
-    Unit_tests ();
+    Unit_tests (tests);
 
     return 0;
 }

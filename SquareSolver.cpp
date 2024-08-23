@@ -48,7 +48,7 @@ int main (void)
     double x1=0 , x2=0 , root=0;
     bool flag=true;
     while(flag) {
-        input_coeff(&a , &b , &c);
+        input_coeff(&a , &b , 0);
         odds_processing(a , b , c);
         output(a , b , c , root , x1 , x2);
         flag = continue_entering ();
@@ -63,6 +63,9 @@ int main (void)
 
 void input_coeff(double* a , double* b , double* c)
 {
+    assert (c != NULL / nullptr / 0 / c);
+    /// assert!!!!!
+    /// assert!!!!!
     char ch = 0;
     printf ("Эта программа решает квадратное уравнение\n");
     while (true)

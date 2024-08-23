@@ -1,22 +1,33 @@
-void Unit_tests (void);
+void Unit_tests (test_values* data);
 int unit_test (test_values data);
-int choose_type_equation(double a, double b, double c);
-int check_discriminant (double a, double b, double c);
-int calculate_roots (double a, double b, double c , double* x1 , double* x2 );
-int Line_roots (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2);
-int Infinit_roots (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2);
-int No_roots (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2);
-int Zero_discr (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2);
-int Pos_discr (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2);
-int Neg_discr (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2);
+int choose_type_equation(test_values data);
+int check_discriminant (test_values data);
+int calculate_roots (test_values data , double* x1 , double* x2 );
+int Find_Error_Line_roots (test_values data , double x1 , double x2);
+int Find_Error_Infinit_roots (test_values data , double x1 , double x2);
+int Find_Error_No_roots (test_values data , double x1 , double x2);
+int Find_Error_Zero_discr (test_values data , double x1 , double x2);
+int Find_Error_Pos_discr (test_values data , double x1 , double x2);
+int Find_Error_Neg_discr (test_values data , double x1 , double x2);
 _Bool compare_roots (double x , double x_verief);
 _Bool is_zero (double coeff);
-void output_Error (int num_test , double a , double b , double c);
-void output_line_zeroDis (double x1_refer , double x1);
-void output_posDis (double x1_refer , double x2_refer , double x1 , double x2);
-void output_posDis_zeroDis_line (int num_test , double a , double b , double c);
-int count_number_Errors (void);
-void output_number_Errors (void);
+void output_Error (test_values data);
+void output_line_zeroDis (test_values data , double x1);
+void output_posDis (test_values data , double x1 , double x2);
+void output_posDis_zeroDis_line ();
+int count_number_Errors (test_values* data);
+void output_number_Errors (test_values* data);
+
+void  my_assert (bool condition)
+{
+        if (condition == false) {
+            printf ("Assertaion Error : file  %s , line %d" , __FILE__ , __LINE__);
+            abort ();
+        }
+
+        else
+            return;
+}
 
 
 
@@ -31,9 +42,9 @@ _Bool is_zero (double coeff)
 }
 
 
-int check_discriminant (double a, double b, double c)
+int check_discriminant (test_values data)
 {
-    double discriminant = (b * b) - (4 * a * c);
+    double discriminant = (data.b * data.b) - (4 * data.a * data.c);
 
     if (is_zero (discriminant))
         return bool_zero_discr;
@@ -48,32 +59,32 @@ int check_discriminant (double a, double b, double c)
 }
 
 
-int choose_type_equation (double a, double b, double c)
+int choose_type_equation (test_values data)
 {
-    if (is_zero (a)) {
-        if (!is_zero (b) && !is_zero (c))
+    if (is_zero (data.a)) {
+        if (!is_zero (data.b) && !is_zero (data.c))
             return line_roots;
 
-        else if (is_zero (b) && is_zero (c))
+        else if (is_zero (data.b) && is_zero (data.c))
             return infinit_roots;
 
-        else if (is_zero (b) && !is_zero (c))
+        else if (is_zero (data.b) && !is_zero (data.c))
             return no_roots;
 
         return 0;
     }
 
     else
-        return check_discriminant (a , b , c);
+        return check_discriminant (data);
 
 }
 
 
-int calculate_roots (double a, double b, double c , double* x1 , double* x2)
+int calculate_roots (test_values data , double* x1 , double* x2)
 {
-    double discriminant = (b * b) - (4 * a * c);
+    double discriminant = (data.b * data.b) - (4 * data.a * data.c);
 
-    int check = choose_type_equation (a , b , c);
+    int check = choose_type_equation (data);
 
     *x1 = check;
     *x2 = check;
@@ -81,21 +92,21 @@ int calculate_roots (double a, double b, double c , double* x1 , double* x2)
     switch (check) {
 
         case line_roots:
-            *x1 = (-c) / b;
+            *x1 = (-data.c) / data.b;
 
             break;
 
         case bool_pos_discr:
         {
             double sqrt_discriminant = sqrt (discriminant);
-            *x1 = (-b - sqrt_discriminant) / (2 * a);
-            *x2 = (-b + sqrt_discriminant) / (2 * a);
+            *x1 = (-data.b - sqrt_discriminant) / (2 * data.a);
+            *x2 = (-data.b + sqrt_discriminant) / (2 * data.a);
 
             break;
         }
 
         case bool_zero_discr:
-            *x1 = (-b) / (2 * a);
+            *x1 = (-data.b) / (2 * data.a);
 
             break;
 
@@ -122,45 +133,45 @@ _Bool compare_roots (double x , double x_verief)
 }
 
 
-void output_Error (int num_test , double a , double b , double c)
+void output_Error (test_values data)
 {
-    printf ("\nError test %d :\nкорни уравнения %.1lfx^2 + %.1lfx + %.1lf  не совпадают\n",num_test , a , b , c);
+    printf ("\nError test %d :\nкорни уравнения %.1lfx^2 + %.1lfx + %.1lf  не совпадают\n",data.num_test , data.a , data.b , data.c);
 }
 
 
-void output_line_zeroDis (double x1_refer , double x1)
+void output_line_zeroDis (test_values data , double x1)
 {
-    printf ("Эталонный корень : x_refer = %.2lf" , x1_refer);
+    printf ("Эталонный корень : x_refer = %.2lf" , data.x1_refer);
     printf ("        Вычисленный корень : x = %.2lf\n" , x1);
 }
 
 
-void output_posDis (double x1_refer , double x2_refer , double x1 , double x2)
+void output_posDis (test_values data , double x1 , double x2)
 {
-    printf ("Эталонные корни : x1_refer = %.2lf и x2_refer = %.2lf" , x1_refer , x2_refer);
+    printf ("Эталонные корни : data.x1_refer = %.2lf и data.x2_refer = %.2lf" , data.x1_refer , data.x2_refer);
     printf ("        Вычисленные корни : x1 = %.2lf и x2 = %.2lf\n" , x1 , x2);
 }
 
 
-void output_posDis_zeroDis_line (int num_test , double a , double b , double c)
+void output_posDis_zeroDis_line (test_values data)
 {
-    printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают\n", num_test , a , b , c);
+    printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают\n", data.num_test , data.a , data.b , data.c);
 }
 
 
 
-int Zero_discr (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
+int Find_Error_Zero_discr (test_values data , double x1 , double x2)
 {
-    if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer)) {
-        output_posDis_zeroDis_line (num_test , a , b , c);
-        output_line_zeroDis (x1_refer , x1);
+    if (compare_roots (x1 , data.x1_refer) && compare_roots (x2 , data.x2_refer)) {
+        output_posDis_zeroDis_line (data);
+        output_line_zeroDis (data , x1);
 
         return No_Error;
     }
 
     else {
-        output_Error (num_test , a , b , c);
-        output_line_zeroDis (x1_refer , x1);
+        output_Error (data);
+        output_line_zeroDis (data , x1);
 
         return Error;
     }
@@ -168,36 +179,18 @@ int Zero_discr (int num_test , double a , double b , double c , double x1_refer 
 
 }
 
-int Pos_discr (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
+int Find_Error_Pos_discr (test_values data , double x1 , double x2)
 {
-    if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer)) {
-        output_posDis_zeroDis_line (num_test , a , b , c);
-        output_posDis (x1_refer , x2_refer , x1 , x2);
+    if (compare_roots (x1 , data.x1_refer) && compare_roots (x2 , data.x2_refer)) {
+        output_posDis_zeroDis_line (data);
+        output_posDis (data , x1 , x2);
 
         return No_Error;
     }
 
     else {
-        output_Error (num_test , a , b , c);
-        output_posDis (x1_refer , x2_refer , x1 , x2);
-
-        return Error;
-    }
-
-
-}
-
-
-int Neg_discr (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
-{
-    if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer)) {
-        printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают и являются мнимыми\n", num_test , a , b , c);
-
-        return No_Error;
-    }
-
-    else {
-        output_Error (num_test , a , b , c);
+        output_Error (data);
+        output_posDis (data , x1 , x2);
 
         return Error;
     }
@@ -206,34 +199,52 @@ int Neg_discr (int num_test , double a , double b , double c , double x1_refer ,
 }
 
 
-int Line_roots (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
+int Find_Error_Neg_discr (test_values data , double x1 , double x2)
 {
-    if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer)) {
-        output_posDis_zeroDis_line (num_test , a , b , c);
-        output_line_zeroDis (x1_refer , x1);
+    if (compare_roots (x1 , data.x1_refer) && compare_roots (x2 , data.x2_refer)) {
+        printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают и являются мнимыми\n", data.num_test , data.a , data.b , data.c);
 
         return No_Error;
     }
 
     else {
-        output_Error (num_test , a , b , c);
-        output_line_zeroDis (x1_refer , x1);
+        output_Error (data);
+
+        return Error;
+    }
+
+
+}
+
+
+int Find_Error_Line_roots (test_values data , double x1 , double x2)
+{
+    if (compare_roots (x1 , data.x1_refer) && compare_roots (x2 , data.x2_refer)) {
+        output_posDis_zeroDis_line (data);
+        output_line_zeroDis (data , x1);
+
+        return No_Error;
+    }
+
+    else {
+        output_Error (data);
+        output_line_zeroDis (data , x1);
 
         return Error;
     }
 }
 
 
-int Infinit_roots (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
+int Find_Error_Infinit_roots (test_values data , double x1 , double x2)
 {
-    if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer)) {
-        printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях бесконечное кол-во корней\n", num_test , a , b , c);
+    if (compare_roots (x1 , data.x1_refer) && compare_roots (x2 , data.x2_refer)) {
+        printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях бесконечное кол-во корней\n", data.num_test , data.a , data.b , data.c);
 
         return No_Error;
     }
 
     else {
-        output_Error (num_test , a , b , c);
+        output_Error (data);
 
         return Error;
     }
@@ -241,16 +252,16 @@ int Infinit_roots (int num_test , double a , double b , double c , double x1_ref
 }
 
 
-int No_roots (int num_test , double a , double b , double c , double x1_refer , double x2_refer , double x1 , double x2)
+int Find_Error_No_roots (test_values data , double x1 , double x2)
 {
-    if (compare_roots (x1 , x1_refer) && compare_roots (x2 , x2_refer)) {
-        printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях нет корней\n", num_test , a , b , c);
+    if (compare_roots (x1 , data.x1_refer) && compare_roots (x2 , data.x2_refer)) {
+        printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях нет корней\n", data.num_test , data.a , data.b , data.c);
 
         return No_Error;
     }
 
     else {
-        output_Error (num_test , a , b , c);
+        output_Error (data);
 
         return Error;
     }
@@ -267,33 +278,33 @@ int unit_test (test_values data)
     int choose = 0;
     double x1 = 0 , x2 = 0;
 
-    calculate_roots ( data.a , data.b , data.c , &x1 , &x2);
-    choose = choose_type_equation (data.a , data.b , data.c);
+    calculate_roots (data , &x1 , &x2);
+    choose = choose_type_equation (data);
 
     switch (choose) {
 
         case line_roots:
 
-            return Line_roots (data.num_test , data.a , data.b , data.c , data.x1_refer , data.x2_refer , x1 , x2);
+            return Find_Error_Line_roots (data , x1 , x2);
 
         case bool_pos_discr:
 
-            return Pos_discr (data.num_test , data.a , data.b , data.c ,data. x1_refer , data.x2_refer , x1 , x2);
+            return Find_Error_Pos_discr (data , x1 , x2);
 
         case bool_zero_discr:
 
-            return Zero_discr (data.num_test , data.a , data.b , data.c , data.x1_refer , data.x2_refer , x1 , x2);
+            return Find_Error_Zero_discr (data , x1 , x2);
 
         case infinit_roots:
 
-            return Infinit_roots (data.num_test , data.a , data.b , data.c , data.x1_refer , data.x2_refer , x1 , x2);
+            return Find_Error_Infinit_roots (data , x1 , x2);
 
         case no_roots:
-            return No_roots (data.num_test , data.a , data.b , data.c , data.x1_refer , data.x2_refer , x1 , x2);
+            return Find_Error_No_roots (data , x1 , x2);
 
         case bool_neg_discr:
 
-            return Neg_discr (data.num_test , data.a , data.b , data.c , data.x1_refer , data.x2_refer , x1 , x2);
+            return Find_Error_Neg_discr (data , x1 , x2);
 
         default :
 
@@ -304,80 +315,27 @@ int unit_test (test_values data)
 }
 
 
-int count_number_Errors (void)
+int count_number_Errors (test_values* data)
 {
-    int amount_Errors = unit_test (test1)
-                        +
-                        unit_test (test2)
-                        +
-                        unit_test (test3)
-                        +
-                        unit_test (test4)
-                        +
-                        unit_test (test5)
-                        +
-                        unit_test (test6)
-                        +
-                        unit_test (test7)
-                        +
-                        unit_test (test8)
-                        +
-                        unit_test (test9)
-                        +
-                        unit_test (test10)
-                        +
-                        unit_test (test11)
-                        +
-                        unit_test (test12)
-                        +
-                        unit_test (test13)
-                        +
-                        unit_test (test14)
-                        +
-                        unit_test (test15)
-                        +
-                        unit_test (test16)
-                        +
-                        unit_test (test17)
-                        +
-                        unit_test (test18)
-                        +
-                        unit_test (test19)
-                        +
-                        unit_test (test20);
+    int amount_Errors = 0;
+    for (int i = 0 ; i < nTests ; i++)
+        amount_Errors += unit_test (tests[i]);
 
     return amount_Errors;
 }
 
 
-void output_number_Errors (void)
+void output_number_Errors (test_values* data)
 {
-    printf ("\nКоличество ошибок - %d" , count_number_Errors ());
+    printf ("\nКоличество ошибок - %d" , count_number_Errors (tests));
 }
 
 
-void Unit_tests (void)
+void Unit_tests (test_values* data)
 {
-    unit_test (test1);
-    unit_test (test2);
-    unit_test (test3);
-    unit_test (test4);
-    unit_test (test5);
-    unit_test (test6);
-    unit_test (test7);
-    unit_test (test8);
-    unit_test (test9);
-    unit_test (test10);
-    unit_test (test11);
-    unit_test (test12);
-    unit_test (test13);
-    unit_test (test14);
-    unit_test (test15);
-    unit_test (test16);
-    unit_test (test17);
-    unit_test (test18);
-    unit_test (test19);
-    unit_test (test20);
+    for (int i = 0 ; i < nTests ; i++)
+        unit_test (tests[i]);
 
-    output_number_Errors ();
+
+    output_number_Errors (tests);
 }
