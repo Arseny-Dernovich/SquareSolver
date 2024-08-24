@@ -81,11 +81,11 @@ int main (void)
 
         if (num == '1')
 
-            Unit_tests (Tests , &root); // delete root
+            Unit_tests (Tests , &root);
 
         else if (num == '2')
 
-            SolveSquare (tests.coef , &root); // delete all args
+            SolveSquare (tests.coef , &root);
 
         else if (num =='3') {
 
