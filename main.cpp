@@ -19,45 +19,45 @@ void Unit_tests (const test* data , roots* root);
 
 const struct test Tests[nTests] = {
 
-    {{.a = 1 , .b = 2 , .c = 3} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr} , .num_test = 1},
+    {.num_test = 1 , {.a = 1 , .b = 2 , .c = 3} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr}},
 
-    {{.a = 0 , .b = 0 , .c = 0} , {.x1_refer = infinit_roots , .x2_refer = infinit_roots} , .num_test = 2},
+    {.num_test = 2 , {.a = 0 , .b = 0 , .c = 0} , {.x1_refer = infinit_roots , .x2_refer = infinit_roots}},
 
-    {{.a = 0 , .b = 0 , .c = 1} , {.x1_refer = no_roots , .x2_refer = no_roots} , .num_test = 3},
+    {.num_test = 3 , {.a = 0 , .b = 0 , .c = 1} , {.x1_refer = no_roots , .x2_refer = no_roots}},
 
-    {{.a = 2 , .b = 3 , .c = 0} , {.x1_refer = -1.5 , .x2_refer = 0} , .num_test = 4},
+    {.num_test = 4 , {.a = 2 , .b = 3 , .c = 0} , {.x1_refer = -1.5 , .x2_refer = 0}},
 
-    {{.a = 1 , .b = 1 , .c = 1} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr} , .num_test = 5},
+    {.num_test = 5 , {.a = 1 , .b = 1 , .c = 1} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr}},
 
-    {{.a = 1 , .b = 2 , .c = 1} , {.x1_refer = -1 , .x2_refer = bool_zero_discr} , .num_test = 6},
+    {.num_test = 6 , {.a = 1 , .b = 2 , .c = 1} , {.x1_refer = -1 , .x2_refer = bool_zero_discr}},
 
-    {{.a = 2 , .b = 0 , .c = -1} , {.x1_refer = (-sqrt(0.5)) , .x2_refer = sqrt(0.5)} , .num_test = 7},
+    {.num_test = 7 , {.a = 2 , .b = 0 , .c = -1} , {.x1_refer = (-sqrt(0.5)) , .x2_refer = sqrt(0.5)}},
 
-    {{.a = 0 , .b = 1 , .c = 0} , {.x1_refer = 0 , .x2_refer = line_roots} , .num_test = 8},
+    {.num_test = 8 , {.a = 0 , .b = 1 , .c = 0} , {.x1_refer = 0 , .x2_refer = line_roots}},
 
-    {{.a = 2 , .b = -1 ,.c =  -1} , {.x1_refer = -0.5 , .x2_refer = 1} , .num_test = 9},
+    {.num_test = 9 , {.a = 2 , .b = -1 ,.c =  -1} , {.x1_refer = -0.5 , .x2_refer = 1}},
 
-    {{.a = 1 , .b = 2 , .c = -5} , {.x1_refer = (((-2) - sqrt(24))/(2*1)) , .x2_refer = (((-2) + sqrt(24))/(2*1))} , .num_test = 10},
+    {.num_test = 10 , {.a = 1 , .b = 2 , .c = -5} , {.x1_refer = (((-2) - sqrt(24))/(2*1)) , .x2_refer = (((-2) + sqrt(24))/(2*1))}},
 
-    {{.a = 1.0 , .b = 2.0 , .c = 3.0} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr} , .num_test = 11},
+    {.num_test = 11 , {.a = 1.0 , .b = 2.0 , .c = 3.0} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr}},
 
-    {{.a = 0.0 , .b = 0.0 , .c = 0.0} , {.x1_refer = 3 , .x2_refer = 3} , .num_test = 12},
+    {.num_test = 12 , {.a = 0.0 , .b = 0.0 , .c = 0.0} , {.x1_refer = 3 , .x2_refer = 3}},
 
-    {{.a = 0.0 , .b = 0.0 , .c = 1.0} , {.x1_refer = no_roots , .x2_refer = no_roots} , .num_test = 13},
+    {.num_test = 13 , {.a = 0.0 , .b = 0.0 , .c = 1.0} , {.x1_refer = no_roots , .x2_refer = no_roots}},
 
-    {{.a = 2.0 , .b = 3.0 , .c = 0.0} , {.x1_refer = -1.5 , .x2_refer = 0} , .num_test = 14},
+    {.num_test = 14 , {.a = 2.0 , .b = 3.0 , .c = 0.0} , {.x1_refer = -1.5 , .x2_refer = 0}},
 
-    {{.a = 1.0 , .b = 1.0 , .c = 1.0} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr} , .num_test = 15},
+    {.num_test = 15 , {.a = 1.0 , .b = 1.0 , .c = 1.0} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr}},
 
-    {{.a = 1.0 , .b = 2.0 , .c = 1.0},  {.x1_refer = -1 , .x2_refer = bool_zero_discr} , .num_test = 16},
+    {.num_test = 16 , {.a = 1.0 , .b = 2.0 , .c = 1.0},  {.x1_refer = -1 , .x2_refer = bool_zero_discr}},
 
-    {{.a = 2.0 , .b = 0.0 , .c = -1.0} , {.x1_refer = (-sqrt(0.5)) , .x2_refer = sqrt(0.5)} , .num_test = 17},
+    {.num_test = 17 , {.a = 2.0 , .b = 0.0 , .c = -1.0} , {.x1_refer = (-sqrt(0.5)) , .x2_refer = sqrt(0.5)}},
 
-    {{.a = 0.0 , .b = 1.0 , .c = 0.0} , {.x1_refer = 0 , .x2_refer = line_roots} , .num_test = 18},
+    {.num_test = 18 , {.a = 0.0 , .b = 1.0 , .c = 0.0} , {.x1_refer = 0 , .x2_refer = line_roots}},
 
-    {{.a = 2.0 , .b = -1.0 , .c = -1.0} , {.x1_refer = -0.5 , .x2_refer = 1} , .num_test = 19},
+    {.num_test = 19 , {.a = 2.0 , .b = -1.0 , .c = -1.0} , {.x1_refer = -0.5 , .x2_refer = 1}},
 
-    {{.a = 1.0 , .b = 2.0 , .c = -5.0} , {.x1_refer = (((-2) - sqrt(24))/(2*1)) , .x2_refer = (((-2) + sqrt(24))/(2*1))} , .num_test = 20}
+    {.num_test = 20 , {.a = 1.0 , .b = 2.0 , .c = -5.0} , {.x1_refer = (((-2) - sqrt(24))/(2*1)) , .x2_refer = (((-2) + sqrt(24))/(2*1))}}
 };
 
 

@@ -16,19 +16,13 @@
 #endif
 
 
-enum quantity_roots {
- line_roots = 1 ,
- no_roots ,
+enum n_roots {
+ line_roots = 1 , // one_root_linear_
+ no_roots , // no_roots_linear_...
  infinit_roots ,
- same_roots ,
- two_roots
-};
-
-
-enum checking_discr {
- bool_pos_discr = 13,
- bool_neg_discr ,
- bool_zero_discr
+ bool_pos_discr = 13, // two_roots
+ bool_neg_discr , // no_root_square_...
+ bool_zero_discr // one_root_square_
 };
 
 
@@ -37,22 +31,19 @@ struct refer {
 };
 
 struct roots {
-    double x1 , x2; };
-
-
-//void Unit_tests (const test_values* data);
-//void SolveSquare ();
-
+    double x1 , x2;
+};
 
 
 struct coeffs {
     double a, b, c;
 };
 
+
 struct test {
-    coeffs coef ;       // test->coef.a
-    refer roots_ref ;   // test->roots_ref.x1
     int num_test;
+    coeffs coef ;
+    refer roots_ref;
 };
 
 
