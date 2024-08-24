@@ -13,16 +13,15 @@ enum check_Error {
 
 const int nTests = 20;
 
-
 const double EPS = 1e-12;
 
 
-int choose_type_equation (coeffs coef);
-int calculate_roots (coeffs coef , double* x1 , double* x2);
+n_roots choose_type_equation (coeffs coef);
+n_roots calculate_roots (coeffs coef , double* x1 , double* x2);
 
 
 
-
+// down
 _Bool compare_roots (double* x , double x_verief)
 {
     if (fabs (*x - x_verief) <= EPS)
@@ -173,10 +172,10 @@ int Find_Error_No_roots (coeffs coef , refer ref ,  roots* root , int num_test)
 
 
 
-
+// up
 int unit_test (test tests , roots* root)
 {
-    int choose = 0;
+    n_roots choose ;
 
     calculate_roots (tests.coef , &root->x1 , &root->x2);
 
@@ -201,6 +200,7 @@ int unit_test (test tests , roots* root)
             return Find_Error_Infinit_roots (tests.coef , tests.roots_ref , root , tests.num_test);
 
         case no_roots:
+
             return Find_Error_No_roots (tests.coef , tests.roots_ref , root , tests.num_test);
 
         case bool_neg_discr:

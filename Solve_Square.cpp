@@ -54,7 +54,7 @@ _Bool is_zero (double coeff)
 }
 
 
-int check_discriminant (coeffs coef)
+n_roots check_discriminant (coeffs coef)
 {
     double discriminant = (coef.b * coef.b) - (4 * coef.a * coef.c);
 
@@ -66,18 +66,16 @@ int check_discriminant (coeffs coef)
 
         return bool_pos_discr;
 
-    else if (discriminant < 0)
+    else /* (discriminant < 0) */
 
         return bool_neg_discr;
-
-    return 0;
 }
 
 
-int choose_type_equation (coeffs coef)
+n_roots choose_type_equation (coeffs coef)
 {
     if (is_zero (coef.a)) {
-        if (!is_zero (coef.b) && !is_zero (coef.c))
+        if (!is_zero (coef.b) /*&& !is_zero (coef.c)*/)
 
             return line_roots;
 
@@ -85,11 +83,9 @@ int choose_type_equation (coeffs coef)
 
             return infinit_roots;
 
-        else if (is_zero (coef.b) && !is_zero (coef.c))
+        else /* if (is_zero (coef.b) && !is_zero (coef.c)) */
 
             return no_roots;
-
-        return 0;
     }
 
     else
@@ -99,11 +95,11 @@ int choose_type_equation (coeffs coef)
 }
 
 
-int calculate_roots (coeffs coef , double* x1 , double* x2)
+n_roots calculate_roots (coeffs coef , double* x1 , double* x2)
 {
     double discriminant = (coef.b * coef.b) - (4 * coef.a * coef.c);
 
-    int check = choose_type_equation (coef);
+    n_roots check = choose_type_equation (coef);
 
     *x1 = check;
     *x2 = check;
@@ -111,8 +107,14 @@ int calculate_roots (coeffs coef , double* x1 , double* x2)
     switch (check) {
 
         case line_roots:
+            if (coef.c !=0 )
 
-            *x1 = (-coef.c) / coef.b;
+                *x1 = (-coef.c) / coef.b;
+
+            else if (coef.c == 0)
+
+                *x1 = (coef.c) / coef.b;
+
 
             break;
 
@@ -146,7 +148,7 @@ int calculate_roots (coeffs coef , double* x1 , double* x2)
 
 
 
-void output (coeffs coef , roots* root , int check)
+void output (coeffs coef , roots* root , n_roots check)
 {
 
 
@@ -177,6 +179,7 @@ void output (coeffs coef , roots* root , int check)
         break;
 
     case bool_pos_discr:
+
         printf ("Корни квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = %.2lf и x2 = %.2lf\n", coef.a, coef.b, coef.c, root->x1, root->x2);
 
         break;
@@ -236,7 +239,7 @@ void SolveSquare (coeffs coef , roots* root)
     while (flag) {
 
         input_coeff (&coef.a , &coef.b , &coef.c);
-        int check = calculate_roots (coef , &root->x1 , &root->x2);
+        n_roots check = calculate_roots (coef , &root->x1 , &root->x2);
         output (coef , root , check);
         flag = continue_entering ();
     }

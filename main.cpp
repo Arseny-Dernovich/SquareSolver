@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
@@ -5,16 +6,16 @@
 
 #include "header.h"
 
+// assert
 // argc argv - аргументы командной строки - K&R, Прата
 // README markdown - google
+// цветной вывод (TXlib)
 
 
 const int nTests = 20;
 
 void SolveSquare (coeffs coef , roots* root);
 void Unit_tests (const test* data , roots* root);
-
-
 
 const struct test Tests[nTests] = {
 
@@ -32,12 +33,11 @@ const struct test Tests[nTests] = {
 
     {{.a = 2 , .b = 0 , .c = -1} , {.x1_refer = (-sqrt(0.5)) , .x2_refer = sqrt(0.5)} , .num_test = 7},
 
-    {{.a = 0 , .b = 1 , .c = 0} , {.x1_refer = line_roots , .x2_refer = line_roots} , .num_test = 8},
+    {{.a = 0 , .b = 1 , .c = 0} , {.x1_refer = 0 , .x2_refer = line_roots} , .num_test = 8},
 
     {{.a = 2 , .b = -1 ,.c =  -1} , {.x1_refer = -0.5 , .x2_refer = 1} , .num_test = 9},
 
     {{.a = 1 , .b = 2 , .c = -5} , {.x1_refer = (((-2) - sqrt(24))/(2*1)) , .x2_refer = (((-2) + sqrt(24))/(2*1))} , .num_test = 10},
-
 
     {{.a = 1.0 , .b = 2.0 , .c = 3.0} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr} , .num_test = 11},
 
@@ -53,7 +53,7 @@ const struct test Tests[nTests] = {
 
     {{.a = 2.0 , .b = 0.0 , .c = -1.0} , {.x1_refer = (-sqrt(0.5)) , .x2_refer = sqrt(0.5)} , .num_test = 17},
 
-    {{.a = 0.0 , .b = 1.0 , .c = 0.0} , {.x1_refer = line_roots , .x2_refer = line_roots} , .num_test = 18},
+    {{.a = 0.0 , .b = 1.0 , .c = 0.0} , {.x1_refer = 0 , .x2_refer = line_roots} , .num_test = 18},
 
     {{.a = 2.0 , .b = -1.0 , .c = -1.0} , {.x1_refer = -0.5 , .x2_refer = 1} , .num_test = 19},
 
@@ -81,11 +81,11 @@ int main (void)
 
         if (num == '1')
 
-                Unit_tests (Tests , &root);
+            Unit_tests (Tests , &root); // delete root
 
         else if (num == '2')
 
-                SolveSquare (tests.coef , &root);
+            SolveSquare (tests.coef , &root); // delete all args
 
         else if (num =='3') {
 
@@ -96,7 +96,7 @@ int main (void)
 
         else
 
-                printf("Неверное значение , выберите либо 1 либо 2 и 3 для завершения : ");
+            printf("Неверное значение , выберите либо 1 либо 2 и 3 для завершения : ");
     }
 
 
