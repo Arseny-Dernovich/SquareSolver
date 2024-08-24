@@ -5,6 +5,17 @@
 
 #include "header.h"
 
+_Bool compare_roots (double* x , double x_verief);
+void output_number_Errors (const test* data , roots* root);
+n_roots choose_type_equation (coeffs coef);
+n_roots calculate_roots (coeffs coef , double* x1 , double* x2);
+int Find_Error_Zero_discr (coeffs coef , refer ref ,  roots* root , int num_test);
+int Find_Error_Pos_discr (coeffs coef , refer ref ,  roots* root , int num_test);
+int Find_Error_Neg_discr (coeffs coef , refer ref ,  roots* root , int num_test);
+int Find_Error_Line_roots (coeffs coef , refer ref ,  roots* root , int num_test);
+int Find_Error_Infinit_roots (coeffs  coef , refer ref ,  roots* root , int num_test);
+int Find_Error_No_roots (coeffs coef , refer ref ,  roots* root , int num_test);
+
 
 enum check_Error {
  No_Error ,
@@ -16,22 +27,57 @@ const int nTests = 20;
 const double EPS = 1e-12;
 
 
-n_roots choose_type_equation (coeffs coef);
-n_roots calculate_roots (coeffs coef , double* x1 , double* x2);
 
 
 
-// down
-_Bool compare_roots (double* x , double x_verief)
+
+void Unit_tests (const test* data , roots* root)
 {
-    if (fabs (*x - x_verief) <= EPS)
-
-        return true;
-
-    else
-
-        return false;
+    output_number_Errors (data , root);
 }
+
+
+int unit_test (test tests , roots* root)
+{
+    n_roots choose ;
+
+    calculate_roots (tests.coef , &root->x1 , &root->x2);
+
+    choose = choose_type_equation (tests.coef);
+
+    switch (choose) {
+
+        case line_roots:
+
+            return Find_Error_Line_roots (tests.coef , tests.roots_ref , root , tests.num_test );
+
+        case bool_pos_discr:
+
+            return Find_Error_Pos_discr (tests.coef , tests.roots_ref , root , tests.num_test);
+
+        case bool_zero_discr:
+
+            return Find_Error_Zero_discr (tests.coef , tests.roots_ref , root , tests.num_test);
+
+        case infinit_roots:
+
+            return Find_Error_Infinit_roots (tests.coef , tests.roots_ref , root , tests.num_test);
+
+        case no_roots:
+
+            return Find_Error_No_roots (tests.coef , tests.roots_ref , root , tests.num_test);
+
+        case bool_neg_discr:
+
+            return Find_Error_Neg_discr (tests.coef , tests.roots_ref , root , tests.num_test);
+
+        default :
+
+            return 0;
+    }
+}
+
+
 
 
 void output_Error (coeffs coef , int num_test)
@@ -65,6 +111,7 @@ int Find_Error_Zero_discr (coeffs coef , refer ref ,  roots* root , int num_test
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
 
         output_posDis_zeroDis_line (coef , num_test);
+
         output_line_zeroDis (ref , &root->x1);
 
         return No_Error;
@@ -73,6 +120,7 @@ int Find_Error_Zero_discr (coeffs coef , refer ref ,  roots* root , int num_test
     else {
 
         output_Error (coef , num_test);
+
         output_line_zeroDis (ref , &root->x1);
 
         return Error;
@@ -86,6 +134,7 @@ int Find_Error_Pos_discr (coeffs coef , refer ref ,  roots* root , int num_test)
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
 
         output_posDis_zeroDis_line (coef , num_test);
+
         output_posDis (ref , &root->x1 , &root->x2);
 
         return No_Error;
@@ -94,6 +143,7 @@ int Find_Error_Pos_discr (coeffs coef , refer ref ,  roots* root , int num_test)
     else {
 
         output_Error (coef , num_test);
+
         output_posDis (ref , &root->x1 , &root->x2);
 
         return Error;
@@ -128,6 +178,7 @@ int Find_Error_Line_roots (coeffs coef , refer ref ,  roots* root , int num_test
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
 
         output_posDis_zeroDis_line (coef , num_test);
+
         output_line_zeroDis (ref , &root->x1);
 
         return No_Error;
@@ -136,6 +187,7 @@ int Find_Error_Line_roots (coeffs coef , refer ref ,  roots* root , int num_test
     else {
 
         output_Error (coef , num_test);
+
         output_line_zeroDis (ref , &root->x1);
 
         return Error;
@@ -179,53 +231,6 @@ int Find_Error_No_roots (coeffs coef , refer ref ,  roots* root , int num_test)
 }
 
 
-
-
-
-// up
-int unit_test (test tests , roots* root)
-{
-    n_roots choose ;
-
-    calculate_roots (tests.coef , &root->x1 , &root->x2);
-
-    choose = choose_type_equation (tests.coef);
-
-    switch (choose) {
-
-        case line_roots:
-
-            return Find_Error_Line_roots (tests.coef , tests.roots_ref , root , tests.num_test );
-
-        case bool_pos_discr:
-
-            return Find_Error_Pos_discr (tests.coef , tests.roots_ref , root , tests.num_test);
-
-        case bool_zero_discr:
-
-            return Find_Error_Zero_discr (tests.coef , tests.roots_ref , root , tests.num_test);
-
-        case infinit_roots:
-
-            return Find_Error_Infinit_roots (tests.coef , tests.roots_ref , root , tests.num_test);
-
-        case no_roots:
-
-            return Find_Error_No_roots (tests.coef , tests.roots_ref , root , tests.num_test);
-
-        case bool_neg_discr:
-
-            return Find_Error_Neg_discr (tests.coef , tests.roots_ref , root , tests.num_test);
-
-        default :
-
-            return 0;
-    }
-
-
-}
-
-
 int count_number_Errors (const test* data , roots* root)
 {
     int amount_Errors = 0;
@@ -244,7 +249,13 @@ void output_number_Errors (const test* data , roots* root)
 }
 
 
-void Unit_tests (const test* data , roots* root)
+_Bool compare_roots (double* x , double x_verief)
 {
-    output_number_Errors (data , root);
+    if (fabs (*x - x_verief) <= EPS)
+
+        return true;
+
+    else
+
+        return false;
 }

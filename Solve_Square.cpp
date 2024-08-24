@@ -5,17 +5,40 @@
 
 #include "header.h"
 
+void input_coeff(double* a , double* b , double* c);
+n_roots calculate_roots (coeffs coef , double* x1 , double* x2);
+void output (coeffs coef , roots* root , n_roots check);
+_Bool continue_entering (void);
+
+
 
 enum type_equation {
  incomp_equat = 6 ,
  full_equat
 };
 
-
-
-
-
 const double EPS = 1e-12;
+
+
+
+void SolveSquare (coeffs coef , roots* root)
+{
+    bool flag = true;
+
+    while (flag) {
+
+        input_coeff (&coef.a , &coef.b , &coef.c);
+
+        n_roots check = calculate_roots (coef , &root->x1 , &root->x2);
+
+        output (coef , root , check);
+
+        flag = continue_entering ();
+    }
+
+    printf ("Программа завершенна\n");
+}
+
 
 void input_coeff(double* a , double* b , double* c)
 {
@@ -92,7 +115,6 @@ n_roots choose_type_equation (coeffs coef)
     else
 
         return check_discriminant (coef);
-
 }
 
 
@@ -149,11 +171,8 @@ n_roots calculate_roots (coeffs coef , double* x1 , double* x2)
 }
 
 
-
 void output (coeffs coef , roots* root , n_roots check)
 {
-
-
     switch (check) {
 
     case line_roots:
@@ -227,23 +246,7 @@ _Bool continue_entering (void)
 
             return false;
         }
-
     }
 }
 
 
-void SolveSquare (coeffs coef , roots* root)
-{
-    bool flag = true;
-
-    while (flag) {
-
-        input_coeff (&coef.a , &coef.b , &coef.c);
-        n_roots check = calculate_roots (coef , &root->x1 , &root->x2);
-        output (coef , root , check);
-        flag = continue_entering ();
-    }
-
-    printf ("Программа завершенна\n");
-
-}
