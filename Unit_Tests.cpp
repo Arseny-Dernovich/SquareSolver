@@ -25,9 +25,11 @@ n_roots calculate_roots (coeffs coef , double* x1 , double* x2);
 _Bool compare_roots (double* x , double x_verief)
 {
     if (fabs (*x - x_verief) <= EPS)
+
         return true;
 
     else
+
         return false;
 }
 
@@ -61,12 +63,15 @@ void output_posDis_zeroDis_line (coeffs coef , int num_test)
 int Find_Error_Zero_discr (coeffs coef , refer ref ,  roots* root , int num_test)
 {
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
+
         output_posDis_zeroDis_line (coef , num_test);
         output_line_zeroDis (ref , &root->x1);
+
         return No_Error;
     }
 
     else {
+
         output_Error (coef , num_test);
         output_line_zeroDis (ref , &root->x1);
 
@@ -79,6 +84,7 @@ int Find_Error_Zero_discr (coeffs coef , refer ref ,  roots* root , int num_test
 int Find_Error_Pos_discr (coeffs coef , refer ref ,  roots* root , int num_test)
 {
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
+
         output_posDis_zeroDis_line (coef , num_test);
         output_posDis (ref , &root->x1 , &root->x2);
 
@@ -86,6 +92,7 @@ int Find_Error_Pos_discr (coeffs coef , refer ref ,  roots* root , int num_test)
     }
 
     else {
+
         output_Error (coef , num_test);
         output_posDis (ref , &root->x1 , &root->x2);
 
@@ -106,6 +113,7 @@ int Find_Error_Neg_discr (coeffs coef , refer ref ,  roots* root , int num_test)
     }
 
     else {
+
         output_Error (coef , num_test);
 
         return Error;
@@ -118,6 +126,7 @@ int Find_Error_Neg_discr (coeffs coef , refer ref ,  roots* root , int num_test)
 int Find_Error_Line_roots (coeffs coef , refer ref ,  roots* root , int num_test)
 {
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
+
         output_posDis_zeroDis_line (coef , num_test);
         output_line_zeroDis (ref , &root->x1);
 
@@ -125,6 +134,7 @@ int Find_Error_Line_roots (coeffs coef , refer ref ,  roots* root , int num_test
     }
 
     else {
+
         output_Error (coef , num_test);
         output_line_zeroDis (ref , &root->x1);
 
@@ -221,6 +231,7 @@ int count_number_Errors (const test* data , roots* root)
     int amount_Errors = 0;
 
     for (int i = 0 ; i < nTests ; i++)
+
         amount_Errors += unit_test (data[i] , root);
 
     return amount_Errors;
@@ -229,7 +240,7 @@ int count_number_Errors (const test* data , roots* root)
 
 void output_number_Errors (const test* data , roots* root)
 {
-    printf ("\nКоличество ошибок - %d\n" , count_number_Errors (data , root));
+    printf ("\nКоличество ошибок - %d\n\n" , count_number_Errors (data , root));
 }
 
 

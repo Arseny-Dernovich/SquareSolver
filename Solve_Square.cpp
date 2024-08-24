@@ -24,6 +24,7 @@ void input_coeff(double* a , double* b , double* c)
     printf ("Эта программа решает квадратное уравнение\n");
 
     while (true) {
+
         printf ("Введите значения коэффицентов \nквадратного уравнения ax^2 + bx + c (a,b,c):");
 
         if ((scanf ("%lf %lf %lf", a, b, c)) != 3) {
@@ -107,6 +108,7 @@ n_roots calculate_roots (coeffs coef , double* x1 , double* x2)
     switch (check) {
 
         case line_roots:
+
             if (coef.c !=0 )
 
                 *x1 = (-coef.c) / coef.b;
@@ -221,8 +223,7 @@ _Bool continue_entering (void)
             return true;
         }
 
-        else if ( choose == 'n' || choose == 'N')
-        {
+        else if ( choose == 'n' || choose == 'N') {
 
             return false;
         }
@@ -233,7 +234,6 @@ _Bool continue_entering (void)
 
 void SolveSquare (coeffs coef , roots* root)
 {
-    coef = {};
     bool flag = true;
 
     while (flag) {
