@@ -37,7 +37,6 @@ struct coeffs {
 
 struct test {
     coeffs coef ;       // test->coef.a
-    roots root ;       // test->roots.x1
     refer roots_ref ;   // test->roots_ref.x1
     int num_test;
 };
