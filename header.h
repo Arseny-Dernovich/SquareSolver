@@ -1,6 +1,20 @@
-
-
 #include <stdio.h>
+#include <assert.h>
+
+#ifndef NDEBUG
+
+    #define my_assert(condition)                                                                    \
+        if (condition == false) {                                                                   \
+            printf ("Assertaion Error : "#condition" , file  %s , line %d" , __FILE__ , __LINE__);  \
+            abort ();                                                                               \
+        }                                                                                           \
+        else;
+#else
+
+    #define my_assert(condition)
+
+#endif
+
 
 enum quantity_roots {
  line_roots = 1 ,
