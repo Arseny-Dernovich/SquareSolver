@@ -14,7 +14,7 @@
 
 const int nTests = 20;
 
-void SolveSquare (coeffs coef , roots* root);
+void SolveSquare (coeffs coeff , roots* root);
 void Unit_tests (const test* data , roots* root);
 
 const struct test Tests[nTests] = {
@@ -63,8 +63,8 @@ const struct test Tests[nTests] = {
 
 int main (void)
 {
-    struct test tests;
-    struct roots root;
+    struct test tests = {};
+    struct roots root = {};
 
     char num = 0;
 
@@ -85,7 +85,7 @@ int main (void)
 
         else if (num == '2')
 
-            SolveSquare (tests.coef , &root);
+            SolveSquare (tests.coeff , &root);
 
         else if (num =='3') {
 

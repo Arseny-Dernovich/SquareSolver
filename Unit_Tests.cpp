@@ -5,16 +5,16 @@
 
 #include "header.h"
 
-_Bool compare_roots (double* x , double x_verief);
 void output_number_Errors (const test* data , roots* root);
-n_roots choose_type_equation (coeffs coef);
-n_roots calculate_roots (coeffs coef , double* x1 , double* x2);
-int Find_Error_Zero_discr (coeffs coef , refer ref ,  roots* root , int num_test);
-int Find_Error_Pos_discr (coeffs coef , refer ref ,  roots* root , int num_test);
-int Find_Error_Neg_discr (coeffs coef , refer ref ,  roots* root , int num_test);
-int Find_Error_Line_roots (coeffs coef , refer ref ,  roots* root , int num_test);
-int Find_Error_Infinit_roots (coeffs  coef , refer ref ,  roots* root , int num_test);
-int Find_Error_No_roots (coeffs coef , refer ref ,  roots* root , int num_test);
+n_roots choose_type_equation (coeffs coeff);
+n_roots calculate_roots (coeffs coeff , double* x1 , double* x2);
+int Find_Error_Zero_discr (coeffs coeff , refer ref ,  roots* root , int num_test);
+int Find_Error_Pos_discr (coeffs coeff , refer ref ,  roots* root , int num_test);
+int Find_Error_Neg_discr (coeffs coeff , refer ref ,  roots* root , int num_test);
+int Find_Error_Line_roots (coeffs coeff , refer ref ,  roots* root , int num_test);
+int Find_Error_Infinit_roots (coeffs  coeff , refer ref ,  roots* root , int num_test);
+int Find_Error_No_roots (coeffs coeff , refer ref ,  roots* root , int num_test);
+_Bool compare_roots (double* x , double x_verief);
 
 
 enum check_Error {
@@ -41,35 +41,35 @@ int unit_test (test tests , roots* root)
 {
     n_roots choose ;
 
-    calculate_roots (tests.coef , &root->x1 , &root->x2);
+    calculate_roots (tests.coeff , &root->x1 , &root->x2);
 
-    choose = choose_type_equation (tests.coef);
+    choose = choose_type_equation (tests.coeff);
 
     switch (choose) {
 
         case line_roots:
 
-            return Find_Error_Line_roots (tests.coef , tests.roots_ref , root , tests.num_test );
+            return Find_Error_Line_roots (tests.coeff , tests.roots_ref , root , tests.num_test );
 
         case bool_pos_discr:
 
-            return Find_Error_Pos_discr (tests.coef , tests.roots_ref , root , tests.num_test);
+            return Find_Error_Pos_discr (tests.coeff , tests.roots_ref , root , tests.num_test);
 
         case bool_zero_discr:
 
-            return Find_Error_Zero_discr (tests.coef , tests.roots_ref , root , tests.num_test);
+            return Find_Error_Zero_discr (tests.coeff , tests.roots_ref , root , tests.num_test);
 
         case infinit_roots:
 
-            return Find_Error_Infinit_roots (tests.coef , tests.roots_ref , root , tests.num_test);
+            return Find_Error_Infinit_roots (tests.coeff , tests.roots_ref , root , tests.num_test);
 
         case no_roots:
 
-            return Find_Error_No_roots (tests.coef , tests.roots_ref , root , tests.num_test);
+            return Find_Error_No_roots (tests.coeff , tests.roots_ref , root , tests.num_test);
 
         case bool_neg_discr:
 
-            return Find_Error_Neg_discr (tests.coef , tests.roots_ref , root , tests.num_test);
+            return Find_Error_Neg_discr (tests.coeff , tests.roots_ref , root , tests.num_test);
 
         default :
 
@@ -80,9 +80,9 @@ int unit_test (test tests , roots* root)
 
 
 
-void output_Error (coeffs coef , int num_test)
+void output_Error (coeffs coeff , int num_test)
 {
-    printf ("\nError test %d :\nкорни уравнения %.1lfx^2 + %.1lfx + %.1lf  не совпадают\n", num_test , coef.a , coef.b , coef.c);
+    printf ("\nError test %d :\nкорни уравнения %.1lfx^2 + %.1lfx + %.1lf  не совпадают\n", num_test , coeff.a , coeff.b , coeff.c);
 }
 
 
@@ -100,17 +100,17 @@ void output_posDis (refer ref, double* x1 , double* x2)
 }
 
 
-void output_posDis_zeroDis_line (coeffs coef , int num_test)
+void output_posDis_zeroDis_line (coeffs coeff , int num_test)
 {
-    printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают\n", num_test , coef.a , coef.b , coef.c);
+    printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают\n", num_test , coeff.a , coeff.b , coeff.c);
 }
 
 
-int Find_Error_Zero_discr (coeffs coef , refer ref ,  roots* root , int num_test)
+int Find_Error_Zero_discr (coeffs coeff , refer ref ,  roots* root , int num_test)
 {
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
 
-        output_posDis_zeroDis_line (coef , num_test);
+        output_posDis_zeroDis_line (coeff , num_test);
 
         output_line_zeroDis (ref , &root->x1);
 
@@ -119,7 +119,7 @@ int Find_Error_Zero_discr (coeffs coef , refer ref ,  roots* root , int num_test
 
     else {
 
-        output_Error (coef , num_test);
+        output_Error (coeff , num_test);
 
         output_line_zeroDis (ref , &root->x1);
 
@@ -129,11 +129,15 @@ int Find_Error_Zero_discr (coeffs coef , refer ref ,  roots* root , int num_test
 
 }
 
-int Find_Error_Pos_discr (coeffs coef , refer ref ,  roots* root , int num_test)
+int Find_Error_Pos_discr (coeffs coeff , refer ref ,  roots* root , int num_test)
 {
+    my_assert (isnan(coeff.a));
+    my_assert (isnan(coeff.b));
+    my_assert (isnan(coeff.c));
+
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
 
-        output_posDis_zeroDis_line (coef , num_test);
+        output_posDis_zeroDis_line (coeff , num_test);
 
         output_posDis (ref , &root->x1 , &root->x2);
 
@@ -142,7 +146,7 @@ int Find_Error_Pos_discr (coeffs coef , refer ref ,  roots* root , int num_test)
 
     else {
 
-        output_Error (coef , num_test);
+        output_Error (coeff , num_test);
 
         output_posDis (ref , &root->x1 , &root->x2);
 
@@ -153,18 +157,22 @@ int Find_Error_Pos_discr (coeffs coef , refer ref ,  roots* root , int num_test)
 }
 
 
-int Find_Error_Neg_discr (coeffs coef , refer ref ,  roots* root , int num_test)
+int Find_Error_Neg_discr (coeffs coeff , refer ref ,  roots* root , int num_test)
 {
+    my_assert (isnan(coeff.a));
+    my_assert (isnan(coeff.b));
+    my_assert (isnan(coeff.c));
+
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
 
-        printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают и являются мнимыми\n", num_test , coef.a , coef.b , coef.c);
+        printf ("\nTest %d :\nОшибок нет , корни уравнения %.1lfx^2 + %.1lfx + %.1lf совпадают и являются мнимыми\n", num_test , coeff.a , coeff.b , coeff.c);
 
         return No_Error;
     }
 
     else {
 
-        output_Error (coef , num_test);
+        output_Error (coeff , num_test);
 
         return Error;
     }
@@ -173,11 +181,15 @@ int Find_Error_Neg_discr (coeffs coef , refer ref ,  roots* root , int num_test)
 }
 
 
-int Find_Error_Line_roots (coeffs coef , refer ref ,  roots* root , int num_test)
+int Find_Error_Line_roots (coeffs coeff , refer ref ,  roots* root , int num_test)
 {
+    my_assert (isnan(coeff.a));
+    my_assert (isnan(coeff.b));
+    my_assert (isnan(coeff.c));
+
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
 
-        output_posDis_zeroDis_line (coef , num_test);
+        output_posDis_zeroDis_line (coeff , num_test);
 
         output_line_zeroDis (ref , &root->x1);
 
@@ -186,7 +198,7 @@ int Find_Error_Line_roots (coeffs coef , refer ref ,  roots* root , int num_test
 
     else {
 
-        output_Error (coef , num_test);
+        output_Error (coeff , num_test);
 
         output_line_zeroDis (ref , &root->x1);
 
@@ -195,17 +207,21 @@ int Find_Error_Line_roots (coeffs coef , refer ref ,  roots* root , int num_test
 }
 
 
-int Find_Error_Infinit_roots (coeffs  coef , refer ref ,  roots* root , int num_test)
+int Find_Error_Infinit_roots (coeffs  coeff , refer ref ,  roots* root , int num_test)
 {
+    my_assert (isnan(coeff.a));
+    my_assert (isnan(coeff.b));
+    my_assert (isnan(coeff.c));
+
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
 
-        printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях бесконечное кол-во корней\n", num_test , coef.a , coef.b , coef.c);
+        printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях бесконечное кол-во корней\n", num_test , coeff.a , coeff.b , coeff.c);
 
         return No_Error;
     }
 
     else {
-        output_Error (coef , num_test);
+        output_Error (coeff , num_test);
 
         return Error;
     }
@@ -213,17 +229,21 @@ int Find_Error_Infinit_roots (coeffs  coef , refer ref ,  roots* root , int num_
 }
 
 
-int Find_Error_No_roots (coeffs coef , refer ref ,  roots* root , int num_test)
+int Find_Error_No_roots (coeffs coeff , refer ref ,  roots* root , int num_test)
 {
+    my_assert (isnan(coeff.a));
+    my_assert (isnan(coeff.b));
+    my_assert (isnan(coeff.c));
+
     if (compare_roots (&root->x1 , ref.x1_refer) && compare_roots (&root->x2 , ref.x2_refer)) {
 
-        printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях нет корней\n", num_test , coef.a , coef.b , coef.c);
+        printf ("\nTest %d :\nОшибок нет , в уравнении %.1lfx^2 + %.1lfx + %.1lf\nв обоих случаях нет корней\n", num_test , coeff.a , coeff.b , coeff.c);
 
         return No_Error;
     }
 
     else {
-        output_Error (coef , num_test);
+        output_Error (coeff , num_test);
 
         return Error;
     }
@@ -251,11 +271,5 @@ void output_number_Errors (const test* data , roots* root)
 
 _Bool compare_roots (double* x , double x_verief)
 {
-    if (fabs (*x - x_verief) <= EPS)
-
-        return true;
-
-    else
-
-        return false;
+    return (fabs (*x - x_verief) <= EPS);
 }

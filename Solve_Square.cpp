@@ -2,12 +2,15 @@
 #include <stdbool.h>
 #include <math.h>
 #include <ctype.h>
+#include <assert.h>
+
 
 #include "header.h"
 
+
 void input_coeff(double* a , double* b , double* c);
-n_roots calculate_roots (coeffs coef , double* x1 , double* x2);
-void output (coeffs coef , roots* root , n_roots check);
+n_roots calculate_roots (coeffs coeff , double* x1 , double* x2);
+void output (coeffs coeff , roots* root , n_roots check);
 _Bool continue_entering (void);
 
 
@@ -21,17 +24,17 @@ const double EPS = 1e-12;
 
 
 
-void SolveSquare (coeffs coef , roots* root)
+void SolveSquare (coeffs coeff , roots* root)
 {
     bool flag = true;
 
     while (flag) {
 
-        input_coeff (&coef.a , &coef.b , &coef.c);
+        input_coeff (&coeff.a , &coeff.b , &coeff.c);
 
-        n_roots check = calculate_roots (coef , &root->x1 , &root->x2);
+        n_roots check = calculate_roots (coeff , &(root->x1) , &(root->x2));
 
-        output (coef , root , check);
+        output (coeff , root , check);
 
         flag = continue_entering ();
     }
@@ -40,17 +43,23 @@ void SolveSquare (coeffs coef , roots* root)
 }
 
 
-void input_coeff(double* a , double* b , double* c)
+void input_coeff (double* a , double* b , double* c)
 {
     char ch = 0;
 
     printf ("Эта программа решает квадратное уравнение\n");
 
+
     while (true) {
 
         printf ("Введите значения коэффицентов \nквадратного уравнения ax^2 + bx + c (a,b,c):");
 
-        if ((scanf ("%lf %lf %lf", a, b, c)) != 3) {
+        if ((scanf ("%lf %lf %lf", a , b , c)) != 3) {
+
+            my_assert (isnan(*a));
+            my_assert (isnan(*b));
+            my_assert (isnan(*c));
+
 
             printf ("Неверные входные значения коэффицентов\n(коэффиценты могут являться только числами)\n");
             while (ch = getchar() != '\n');
@@ -58,29 +67,28 @@ void input_coeff(double* a , double* b , double* c)
 
         else {
 
+            my_assert (isnan(*a));
+            my_assert (isnan(*b));
+            my_assert (isnan(*c));
+
             while (ch = getchar() != '\n');
-        }
+
 
             return ;
+        }
     }
 }
 
 
 _Bool is_zero (double coeff)
 {
-    if (fabs(coeff) <=  EPS)
-
-        return true;
-
-    else
-
-        return false;
+    return (fabs(coeff) <=  EPS);
 }
 
 
-n_roots check_discriminant (coeffs coef)
+n_roots check_discriminant (coeffs coeff)
 {
-    double discriminant = (coef.b * coef.b) - (4 * coef.a * coef.c);
+    double discriminant = (coeff.b * coeff.b) - (4 * coeff.a * coeff.c);
 
     if (is_zero (discriminant))
 
@@ -96,33 +104,36 @@ n_roots check_discriminant (coeffs coef)
 }
 
 
-n_roots choose_type_equation (coeffs coef)
+n_roots choose_type_equation (coeffs coeff)
 {
-    if (is_zero (coef.a)) {
-        if (!is_zero (coef.b) /*&& !is_zero (coef.c)*/)
+    if (is_zero (coeff.a)) {
+
+        if (!is_zero (coeff.b) /*&& !is_zero (coeff.c)*/)
 
             return line_roots;
 
-        else if (is_zero (coef.b) && is_zero (coef.c))
+        else if (is_zero (coeff.b) && is_zero (coeff.c))
 
             return infinit_roots;
 
-        else /* if (is_zero (coef.b) && !is_zero (coef.c)) */
+        else /* if (is_zero (coeff.b) && !is_zero (coeff.c)) */
 
             return no_roots;
     }
 
     else
 
-        return check_discriminant (coef);
+        return check_discriminant (coeff);
 }
 
 
-n_roots calculate_roots (coeffs coef , double* x1 , double* x2)
+n_roots calculate_roots (coeffs coeff , double* x1 , double* x2)
 {
-    double discriminant = (coef.b * coef.b) - (4 * coef.a * coef.c);
+    my_assert (coeff.a == NAN);
 
-    n_roots check = choose_type_equation (coef);
+    double discriminant = (coeff.b * coeff.b) - (4 * coeff.a * coeff.c);
+
+    n_roots check = choose_type_equation (coeff);
 
     *x1 = check;
     *x2 = check;
@@ -131,13 +142,13 @@ n_roots calculate_roots (coeffs coef , double* x1 , double* x2)
 
         case line_roots:
 
-            if (coef.c !=0 )
+            if (coeff.c !=0 )
 
-                *x1 = (-coef.c) / coef.b;
+                *x1 = (-coeff.c) / coeff.b;
 
-            else if (coef.c == 0)
+            else if (coeff.c == 0)
 
-                *x1 = (coef.c) / coef.b;
+                *x1 = (coeff.c) / coeff.b;
 
 
             break;
@@ -146,15 +157,15 @@ n_roots calculate_roots (coeffs coef , double* x1 , double* x2)
         {
             double sqrt_discriminant = sqrt (discriminant);
 
-            *x1 = (-coef.b - sqrt_discriminant) / (2 * coef.a);
-            *x2 = (-coef.b + sqrt_discriminant) / (2 * coef.a);
+            *x1 = (-coeff.b - sqrt_discriminant) / (2 * coeff.a);
+            *x2 = (-coeff.b + sqrt_discriminant) / (2 * coeff.a);
 
             break;
         }
 
         case bool_zero_discr:
 
-            *x1 = (-coef.b) / (2 * coef.a);
+            *x1 = (-coeff.b) / (2 * coeff.a);
 
             break;
 
@@ -171,13 +182,13 @@ n_roots calculate_roots (coeffs coef , double* x1 , double* x2)
 }
 
 
-void output (coeffs coef , roots* root , n_roots check)
+void output (coeffs coeff , roots* root , n_roots check)
 {
     switch (check) {
 
     case line_roots:
 
-        printf ("Корень линейного уравнения %.1lfx + %.1lf=0   x = %.2lf\n", coef.b, coef.c, root->x1);
+        printf ("Корень линейного уравнения %.1lfx + %.1lf = 0   x = %.2lf\n", coeff.b, coeff.c, root->x1);
 
         break;
 
@@ -195,19 +206,19 @@ void output (coeffs coef , roots* root , n_roots check)
 
     case incomp_equat:
 
-        printf ("Корень квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0 111   x = %.2lf\n", coef.a, coef.b, coef.c, root->x2);
+        printf ("Корень квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0 !!!   x = %.2lf\n", coeff.a, coeff.b, coeff.c, root->x2);
 
         break;
 
     case bool_pos_discr:
 
-        printf ("Корни квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = %.2lf и x2 = %.2lf\n", coef.a, coef.b, coef.c, root->x1, root->x2);
+        printf ("Корни квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = %.2lf и x2 = %.2lf\n", coeff.a, coeff.b, coeff.c, root->x1, root->x2);
 
         break;
 
     case bool_neg_discr:
 
-        printf ("Корни квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = nan и x2 = nan\n", coef.a, coef.b, coef.c);
+        printf ("Корни квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = nan и x2 = nan\n", coeff.a, coeff.b, coeff.c);
 
         printf ("Корней нет (дискриминант отрицательный).\n");
 
@@ -215,7 +226,7 @@ void output (coeffs coef , roots* root , n_roots check)
 
     case bool_zero_discr:
 
-        printf ("Корень квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = %.2lf \n", coef.a, coef.b, coef.c, root->x1);
+        printf ("Корень квадратного уравнения %.1lfx^2 + %.1lfx + %.1lf = 0  -  x1 = %.2lf \n", coeff.a, coeff.b, coeff.c, root->x1);
 
         break;
 
@@ -227,26 +238,34 @@ _Bool continue_entering (void)
 {
     while (true)
     {
-        char choose;
+        char choose = 0;
 
         printf ("Если хотите продолжить нажмите y/Y , если хотите закончить нажмите n/N\n");
 
         scanf (" %c" , &choose);
 
-        while (getchar() != '\n')
+        while (getchar() != '\n');
+
+        switch (choose) {
+
+            case 'y':
+            case 'Y':
+
+                return true;
+
+            case 'n':
+            case 'N':
+
+                return false;
+
+            default:
 
                 continue;
-
-        if (choose == 'y' || choose == 'Y') {
-
-            return true;
         }
 
-        else if ( choose == 'n' || choose == 'N') {
 
-            return false;
-        }
     }
 }
+
 
 
