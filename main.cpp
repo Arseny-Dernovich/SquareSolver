@@ -16,8 +16,9 @@ const int nTests = 20;
 
 void SolveSquare (coeffs coeff , roots* root);
 void Unit_tests (const test* data , roots* root);
-
-const struct test Tests[nTests] = {
+//------------------------------------------------------------------------------------------------------------------------------
+const struct test Tests[nTests] = {                                                  // константый массив структур для номера теста , для коэффициентов квадратного уравнения
+                                                                                     // и для эталонных корней
 
     {.num_test = 1 , {.a = 1 , .b = 2 , .c = 3} , {.x1_refer = bool_neg_discr , .x2_refer = bool_neg_discr}},
 
@@ -59,7 +60,7 @@ const struct test Tests[nTests] = {
 
     {.num_test = 20 , {.a = 1.0 , .b = 2.0 , .c = -5.0} , {.x1_refer = (((-2) - sqrt(24))/(2*1)) , .x2_refer = (((-2) + sqrt(24))/(2*1))}}
 };
-
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 int main (void)
 {

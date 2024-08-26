@@ -20,11 +20,11 @@ enum type_equation {
  full_equat
 };
 
-const double EPS = 1e-12;
+const double EPS = 1e-12;                                              // погрешность для сравнения чисел с плавающей запятой
 
 
 
-void SolveSquare (coeffs coeff , roots* root)
+void SolveSquare (coeffs coeff , roots* root)                          // квадратное уравнение
 {
     bool flag = true;
 
@@ -41,9 +41,9 @@ void SolveSquare (coeffs coeff , roots* root)
 
     printf ("Программа завершенна\n");
 }
+//============================================================================
 
-
-void input_coeff (double* a , double* b , double* c)
+void input_coeff (double* a , double* b , double* c)                  // функция ввода коэффициентов квадратного уравнения
 {
     char ch = 0;
 
@@ -78,15 +78,15 @@ void input_coeff (double* a , double* b , double* c)
         }
     }
 }
+//----------------------------------------------------------------------------
 
-
-_Bool is_zero (double coeff)
+_Bool is_zero (double coeff)                                         // функция сравнения чисел с плавающей запятой с нулём
 {
     return (fabs(coeff) <=  EPS);
 }
+//----------------------------------------------------------------------------
 
-
-n_roots check_discriminant (coeffs coeff)
+n_roots check_discriminant (coeffs coeff)                            // функция проверки дискриминанта ( > 0 , < 0 , = 0 )
 {
     double discriminant = (coeff.b * coeff.b) - (4 * coeff.a * coeff.c);
 
@@ -102,9 +102,9 @@ n_roots check_discriminant (coeffs coeff)
 
         return bool_neg_discr;
 }
+//----------------------------------------------------------------------------
 
-
-n_roots choose_type_equation (coeffs coeff)
+n_roots choose_type_equation (coeffs coeff)                         // функция проверки какого типа является уравнение , в зависимости от значений коэффициентов
 {
     if (is_zero (coeff.a)) {
 
@@ -125,11 +125,11 @@ n_roots choose_type_equation (coeffs coeff)
 
         return check_discriminant (coeff);
 }
+//----------------------------------------------------------------------------
 
-
-n_roots calculate_roots (coeffs coeff , double* x1 , double* x2)
+n_roots calculate_roots (coeffs coeff , double* x1 , double* x2)     // функция высчитывания корней квадратного уравнения
 {
-    my_assert (coeff.a == NAN);
+
 
     double discriminant = (coeff.b * coeff.b) - (4 * coeff.a * coeff.c);
 
@@ -180,9 +180,9 @@ n_roots calculate_roots (coeffs coeff , double* x1 , double* x2)
 
     return check;
 }
+//----------------------------------------------------------------------------
 
-
-void output (coeffs coeff , roots* root , n_roots check)
+void output (coeffs coeff , roots* root , n_roots check)            // функция вывода
 {
     switch (check) {
 
@@ -232,9 +232,9 @@ void output (coeffs coeff , roots* root , n_roots check)
 
     }
 }
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-_Bool continue_entering (void)
+_Bool continue_entering (void)                                     // функция , запрашивающая у пользователя хочет ли он продолжить решать квадратное уравнение
 {
     while (true)
     {
